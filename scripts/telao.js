@@ -1,13 +1,20 @@
 var fjson = "https://picasaweb.google.com/data/feed/base/user/achvaicer/albumid/5588740059809037009?alt=json&kind=photo&authkey=Gv1sRgCPXT_IDYp8OfGA&hl=en_US";
 var vjson = "http://gdata.youtube.com/feeds/users/machinima/uploads?alt=json&format=5";
 
+var items = [];
+
 $(document).ready(function() {
-//	loadPhoto();
+	loadPhoto();
 	loadVideo();
 });
 
 function doAjax(url, cb) {
 	$.getJSON(url, function(data) {cb(data);});
+}
+
+function showLessViewed() {
+	items.sort(function (a,b) { return a.viewed < b.viewed ? -1 : 1 });
+	
 }
 
 function showPhoto(src) {
@@ -23,17 +30,27 @@ function showVideo(src) {
 
 function loadPhoto() {
 	doAjax(fjson, function(data) {
+		console.log(data);
 		var f = data.feed.entry;
-		if (f && f.length)
-			showPhoto(f[f.length -1].content.src);
+		for (var i=0; i < f.length; i++) {
+			var src = f[i].content.src;
+			if (!items.filter(function(e) { return e.type == "photo" && e.src == src }).length)
+				items.push({"src":src, type:"photo", viewed:0});
+		}
+		setTimeout(loadPhoto, 60000);		
 	});
 }
 
 function loadVideo() {
 	doAjax(vjson, function(data) {
+		console.log(data);
 		var v = data.feed.entry;
-		if (v && v.length)
-			showVideo($.url.setUrl(v[v.length-1].link[0].href).param("v"));
-		console.log(data);		
+		for (var i =0; i < v.length; i++) {
+			var ytid = $.url.setUrl(v[i].link[0].href).param("v");
+			if (!items.filter(function(e) { return e.type == "video" && e.id == ytid }).length)
+				items.push({id:ytid, type:"video", viewed:0});
+
+		}
+		setTimeout(loadVideo, 60000);
 	});
 }
