@@ -6,7 +6,7 @@ var items = [];
 $(document).ready(function() {
 	loadPhoto();
 	loadVideo();
-	setInterval(showLessViewed, 60000);
+	setInterval(showLessViewed, 30000);
 });
 
 function doAjax(url, cb) {
