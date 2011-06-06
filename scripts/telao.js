@@ -1,12 +1,12 @@
 var fjson = "https://picasaweb.google.com/data/feed/base/user/achvaicer/albumid/5588740059809037009?alt=json&kind=photo&authkey=Gv1sRgCPXT_IDYp8OfGA&hl=en_US";
-var vjson = "http://gdata.youtube.com/feeds/users/achvaicer/uploads?alt=json&format=5";
+var vjson = "http://gdata.youtube.com/feeds/users/nikefutebol/uploads?alt=json&format=5";
 
 var items = [];
-
+var interval = 0;
 $(document).ready(function() {
 	loadPhoto();
 	loadVideo();
-	setInterval(showLessViewed, 30000);
+	interval = setInterval(showLessViewed, 30000);
 });
 
 function doAjax(url, cb) {
@@ -15,10 +15,12 @@ function doAjax(url, cb) {
 
 function showLessViewed() {
 	if (!items.length) return;
-	items.sort(function (a,b) { return a.viewed < b.viewed ? -1 : 1 });
+	clearInterval(interval);
+	items.sort(function (a,b) { return a.viewed <= b.viewed ? -1 : 1 });
 	var first = items[0];
 	first.show(first.src);
 	first.viewed++;
+	setTimeout(showLessViewed, first.duration);
 }
 
 function showPhoto(src) {
@@ -34,25 +36,24 @@ function showVideo(src) {
 
 function loadPhoto() {
 	doAjax(fjson, function(data) {
-		console.log(data);
 		var f = data.feed.entry || [];
 		for (var i=0; i < f.length; i++) {
 			var src = f[i].content.src;
 			if (!items.filter(function(e) { return e.type == "photo" && e.src == src }).length)
-				items.push({"src":src, type:"photo", viewed:0, show:showPhoto});
+				items.push({"src":src, type:"photo", viewed:0, show:showPhoto, duration:10000});
 		}
 		setTimeout(loadPhoto, 60000);		
 	});
 }
 
 function loadVideo() {
+	
 	doAjax(vjson, function(data) {
-		console.log(data);
 		var v = data.feed.entry || [];
 		for (var i =0; i < v.length; i++) {
 			var src = $.url.setUrl(v[i].link[0].href).param("v");
 			if (!items.filter(function(e) { return e.type == "video" && e.src== src }).length)
-				items.push({"src":src, type:"video", viewed:0, show:showVideo});
+				items.push({"src":src, type:"video", viewed:0, show:showVideo, duration:v[i].media$group.yt$duration.seconds * 1000});
 
 		}
 		setTimeout(loadVideo, 60000);
