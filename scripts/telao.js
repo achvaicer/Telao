@@ -1,11 +1,13 @@
 var fjson = "https://picasaweb.google.com/data/feed/base/user/achvaicer/albumid/5588740059809037009?alt=json&kind=photo&authkey=Gv1sRgCPXT_IDYp8OfGA&hl=en_US";
 var vjson = "http://gdata.youtube.com/feeds/users/nikefutebol/uploads?alt=json&format=5";
+var tjson = "http://search.twitter.com/search.json?q=%23betore";
 
 var items = [];
 var interval = 0;
 $(document).ready(function() {
 	loadPhoto();
 	loadVideo();
+	loadTweet();
 	interval = setInterval(showLessViewed, 30000);
 });
 
@@ -57,5 +59,13 @@ function loadVideo() {
 
 		}
 		setTimeout(loadVideo, 60000);
+	});
+}
+
+function loadTweet() {
+	doAjax(tjson, function(data) {
+		var t = data;
+		console.log(data);
+		setTimeout(loadTweet, 60000);
 	});
 }
