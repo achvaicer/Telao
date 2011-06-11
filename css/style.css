@@ -42,12 +42,13 @@ img {
 }
 
 #foto {
-	max-width:800px;
+	max-width:860px;
 	max-height:600px
 }
 
 #video {
-
+	width: 860px;
+	height: 480px;
 }
 
 #content {

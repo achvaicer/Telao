@@ -5,7 +5,7 @@ var items = [];
 var interval = 0;
 $(document).ready(function() {
 	loadPhoto();
-//	loadVideo();
+	loadVideo();
 	interval = setInterval(showLessViewed, 30000);
 });
 
