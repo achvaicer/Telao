@@ -8,11 +8,11 @@ $(document).ready(function() {
 	loadPhoto();
 	loadVideo();
 	loadTweet();
-	interval = setInterval(showLessViewed, 30000);
+	interval = setInterval(showLessViewed, 5000);
 });
 
 function doAjax(url, cb) {
-	$.getJSON(url + "&nochache="+(new Date()).toString(), function(data) {cb(data);});
+	$.getJSON(url + "&nochache="+(new Date()).getTime(), function(data) {cb(data);});
 }
 
 function showLessViewed() {
