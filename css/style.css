@@ -1,0 +1,58 @@
+
+/*
+Design by Free CSS Templates
+http://www.freecsstemplates.org
+Released for free under a Creative Commons Attribution 2.5 License
+*/
+
+body {
+	margin: 0;
+	padding: 0;
+	background: #482E53;
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: 14px;
+}
+
+h1 {
+	text-align: center;
+	padding: 10px 60px;
+	font-weight: normal;
+	font-size: 2em;
+	float: left;
+        letter-spacing: -1px;
+        text-shadow: #15041C -1px 1px 2px;
+        font-family: Georgia, "Times New Roman", Times, serif;
+        font-size: 42px;
+        color: #FFFFFF;
+}
+
+#title {
+	margin-left: auto;
+	margin-right: auto;
+}
+
+
+span.email {
+	text-decoration: underline;
+}
+
+img {
+	border: 6px solid #E1F1F6;
+	margin: 0px auto;
+}
+
+#foto {
+	max-width:860px;
+	max-height:600px
+}
+
+#video {
+	width: 860px;
+	height: 480px;
+}
+
+#content {
+	padding-top: 60px;
+	padding-left: 60px;
+}
+
