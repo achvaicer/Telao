@@ -12,7 +12,7 @@ $(document).ready(function() {
 });
 
 function doAjax(url, cb) {
-	$.getJSON(url, function(data) {cb(data);});
+	$.getJSON(url + "&nochache="+(new Date()).toString(), function(data) {cb(data);});
 }
 
 function showLessViewed() {
