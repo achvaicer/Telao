@@ -26,14 +26,15 @@ function showLessViewed() {
 }
 
 function showPhoto(src) {
-	$("#foto").attr("src", src).show();
-	$("#video").hide();
+	$(".incoming .foto").attr("src", src).show();
+	$(".incoming .video").hide();
+	switchMediaDivs();	
 }
 
 function showVideo(src) {
-	$("#video").attr("src", "http://www.youtube.com/embed/" + src + "?rel=0&autoplay=1&controls=0").show();
-	$("#foto").hide();
-
+	$(".incoming .video").attr("src", "http://www.youtube.com/embed/" + src + "?rel=0&autoplay=1&controls=0").show();
+	$(".incoming .foto").hide();
+	switchMediaDivs();
 }
 
 function loadPhoto() {
@@ -43,6 +44,7 @@ function loadPhoto() {
 			var src = f[i].content.src;
 			if (!items.filter(function(e) { return e.type == "photo" && e.src == src }).length)
 				items.push({"src":src, type:"photo", viewed:0, show:showPhoto, duration:10000});
+				
 		}
 		setTimeout(loadPhoto, 60000);		
 	});
@@ -68,4 +70,10 @@ function loadTweet() {
 		console.log(data);
 		setTimeout(loadTweet, 60000);
 	});
+}
+
+function switchMediaDivs() {
+	$(".incoming").removeClass("incoming").addClass("temp");
+	$(".outgoing").removeClass("outgoing").addClass("incoming");
+	$(".temp").removeClass("temp").addClass("outgoing");
 }
