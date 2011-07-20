@@ -76,4 +76,5 @@ function switchMediaDivs() {
 	$(".incoming").removeClass("incoming").addClass("temp");
 	$(".outgoing").removeClass("outgoing").addClass("incoming");
 	$(".temp").removeClass("temp").addClass("outgoing");
+	$(".incoming .foto").hide();
 }
