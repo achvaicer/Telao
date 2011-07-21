@@ -4,6 +4,8 @@ var tjson = "http://search.twitter.com/search.json?q=%23betore";
 
 var items = [];
 var interval = 0;
+var min = 0;
+
 $(document).ready(function() {
 	loadPhoto();
 	loadVideo();
@@ -21,7 +23,7 @@ function showLessViewed() {
 	items.sort(function (a,b) { return a.viewed <= b.viewed ? -1 : 1 });
 	var first = items[0];
 	first.show(first.src);
-	first.viewed++;
+	min = first.viewed++;
 	setTimeout(showLessViewed, first.duration);
 }
 
@@ -43,7 +45,7 @@ function loadPhoto() {
 		for (var i=0; i < f.length; i++) {
 			var src = f[i].content.src;
 			if (!items.filter(function(e) { return e.type == "photo" && e.src == src }).length)
-				items.push({"src":src, type:"photo", viewed:0, show:showPhoto, duration:10000});
+				items.push({"src":src, type:"photo", viewed:min, show:showPhoto, duration:10000});
 				
 		}
 		setTimeout(loadPhoto, 60000);		
@@ -57,7 +59,7 @@ function loadVideo() {
 		for (var i =0; i < v.length; i++) {
 			var src = $.url.setUrl(v[i].link[0].href).param("v");
 			if (!items.filter(function(e) { return e.type == "video" && e.src== src }).length)
-				items.push({"src":src, type:"video", viewed:0, show:showVideo, duration:v[i].media$group.yt$duration.seconds * 1000});
+				items.push({"src":src, type:"video", viewed:min, show:showVideo, duration:v[i].media$group.yt$duration.seconds * 1000});
 
 		}
 		setTimeout(loadVideo, 60000);
