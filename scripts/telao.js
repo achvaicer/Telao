@@ -1,4 +1,4 @@
-var fjson = "https://picasaweb.google.com/data/feed/base/user/achvaicer/albumid/5588740059809037009?alt=json&kind=photo&authkey=Gv1sRgCPXT_IDYp8OfGA&hl=en_US";
+var fjson = "https://picasaweb.google.com/data/feed/base/user/106981697394501292130/albumid/5631558909771775489?alt=json&kind=photo&hl=en_US"
 var vjson = "http://gdata.youtube.com/feeds/users/achvaicer/uploads?alt=json&format=5";
 var tjson = "http://search.twitter.com/search.json?q=%23betore";
 
@@ -6,8 +6,6 @@ var items = [];
 var interval = 0;
 $(document).ready(function() {
 	loadPhoto();
-	loadVideo();
-	loadTweet();
 	interval = setInterval(showLessViewed, 5000);
 });
 
