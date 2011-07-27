@@ -19,19 +19,21 @@ function showLessViewed() {
 	clearInterval(interval);
 	items.sort(function (a,b) { return a.viewed <= b.viewed ? -1 : 1 });
 	var first = items[0];
-	first.show(first.src);
+	first.show(first.src, first.title);
 	min = first.viewed++;
 	setTimeout(showLessViewed, first.duration);
 }
 
-function showPhoto(src) {
+function showPhoto(src, title) {
 	$(".incoming .foto").attr("src", src).show();
+	if (title) $(".incoming .title").text(title).show();
 	$(".incoming .video").hide();
 	switchMediaDivs();	
 }
 
-function showVideo(src) {
+function showVideo(src, title) {
 	$(".incoming .video").attr("src", "http://www.youtube.com/embed/" + src + "?rel=0&autoplay=1&controls=0").show();
+	if (title) $(".incoming .title").text(title).show();
 	$(".incoming .foto").hide();
 	switchMediaDivs();
 }
@@ -41,8 +43,9 @@ function loadPhoto() {
 		var f = data.feed.entry || [];
 		for (var i=0; i < f.length; i++) {
 			var src = f[i].content.src;
+			var title = f[i].title.$t;
 			if (!items.filter(function(e) { return e.type == "photo" && e.src == src }).length)
-				items.push({"src":src, type:"photo", viewed:min, show:showPhoto, duration:10000});
+				items.push({"src":src, type:"photo", viewed:min, show:showPhoto, duration:5000, "title":title});
 				
 		}
 		setTimeout(loadPhoto, 60000);		
@@ -76,4 +79,5 @@ function switchMediaDivs() {
 	$(".outgoing").removeClass("outgoing").addClass("incoming");
 	$(".temp").removeClass("temp").addClass("outgoing");
 	$(".incoming .foto").hide();
+	$(".incoming .title").hide();
 }
