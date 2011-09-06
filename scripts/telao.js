@@ -8,8 +8,6 @@ var min = 0;
 
 $(document).ready(function() {
 	loadPhoto();
-	loadVideo();
-	loadTweet();
 	interval = setInterval(showLessViewed, 5000);
 });
 
