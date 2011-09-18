@@ -1,6 +1,5 @@
-var fjson = "https://picasaweb.google.com/data/feed/base/user/achvaicer/albumid/5588740059809037009?alt=json&kind=photo&authkey=Gv1sRgCPXT_IDYp8OfGA&hl=en_US";
-var vjson = "http://gdata.youtube.com/feeds/users/achvaicer/uploads?alt=json&format=5";
-var tjson = "http://search.twitter.com/search.json?q=%23betore";
+var fjson = "https://picasaweb.google.com/data/feed/base/user/{userid}/albumid/{albumid}?alt=json&kind=photo&authkey={authkey_if_necessary}&=en_US";
+var vjson = "http://gdata.youtube.com/feeds/users/{userid}/uploads?alt=json&format=5";
 
 var items = [];
 var interval = 0;
@@ -61,14 +60,6 @@ function loadVideo() {
 
 		}
 		setTimeout(loadVideo, 60000);
-	});
-}
-
-function loadTweet() {
-	doAjax(tjson, function(data) {
-		var t = data;
-		console.log(data);
-		setTimeout(loadTweet, 60000);
 	});
 }
 
