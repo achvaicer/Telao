@@ -1,4 +1,4 @@
-var fjson = "https://picasaweb.google.com/data/feed/base/user/{userid}/albumid/{albumid}?alt=json&kind=photo&authkey={authkey_if_necessary}&=en_US";
+var fjson = "https://api.instagram.com/v1/tags/{tag}/media/recent?access_token={token}";
 var vjson = "http://gdata.youtube.com/feeds/users/{userid}/uploads?alt=json&format=5";
 
 var items = [];
@@ -11,7 +11,13 @@ $(document).ready(function() {
 });
 
 function doAjax(url, cb) {
-	$.getJSON(url + "&nochache="+(new Date()).getTime(), function(data) {cb(data);});
+	$.ajax({
+	    url: url,
+	    type: 'POST',
+	    crossDomain: true,
+	    dataType: 'jsonp',
+	    success: cb 
+	});
 }
 
 function showLessViewed() {
@@ -37,15 +43,15 @@ function showVideo(src) {
 }
 
 function loadPhoto() {
-	doAjax(fjson, function(data) {
-		var f = data.feed.entry || [];
+	doAjax(fjson, function(json) {
+		var f = json.data || [];
 		for (var i=0; i < f.length; i++) {
-			var src = f[i].content.src;
+			var src = f[i].images.standard_resolution.url;
 			if (!items.filter(function(e) { return e.type == "photo" && e.src == src }).length)
 				items.push({"src":src, type:"photo", viewed:min, show:showPhoto, duration:10000});
 				
 		}
-		setTimeout(loadPhoto, 60000);		
+		setTimeout(loadPhoto, 300000);		
 	});
 }
 
